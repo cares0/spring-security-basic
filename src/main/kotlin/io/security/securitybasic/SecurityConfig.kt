@@ -50,6 +50,29 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
             // 해당 요청은 인증 없이도 이용 가능하도록 모두 혀용
             .permitAll()
+
+        http
+            // 로그아웃 사용
+            .logout()
+
+            // 로그아웃 URL
+            .logoutUrl("/logout")
+
+            // 로그아웃 성공 시 리다이렉트 할 URL
+            .logoutSuccessUrl("/login")
+
+            // 로그아웃 핸들러
+            .addLogoutHandler { request, response, authentication ->
+                request.session.invalidate()
+            }
+
+            // 로그아웃 성공 후 핸들러
+            .logoutSuccessHandler { request, response, authentication ->
+                response.sendRedirect("/login")
+            }
+
+            // 로그아웃 후 쿠키 삭제
+            .deleteCookies("remember-me")
     }
 
 
