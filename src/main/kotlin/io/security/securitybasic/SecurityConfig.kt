@@ -4,10 +4,13 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.core.userdetails.UserDetailsService
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig : WebSecurityConfigurerAdapter() {
+class SecurityConfig(
+    private val userDetailsService: UserDetailsService
+) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http
@@ -73,6 +76,22 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
             // 로그아웃 후 쿠키 삭제
             .deleteCookies("remember-me")
+
+        http
+            // Remember Me 사용
+            .rememberMe()
+
+            // Remember Me 적용 여부 파라미터 이름(기본: "remember-me")
+            .rememberMeParameter("remember")
+
+            // Remember Me 쿠키에 담긴 토큰의 유효시간(기본: 14일)
+            .tokenValiditySeconds(3600)
+
+            // 파라미터가 없더라도 항상 Remember Me를 적용할지 여부
+            .alwaysRemember(true)
+
+            // Remember Me를 인증하기 위해 User의 정보를 가져오는 Service
+            .userDetailsService(userDetailsService)
     }
 
 
