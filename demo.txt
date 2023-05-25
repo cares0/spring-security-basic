@@ -1,0 +1,9 @@
+1. UsernamePasswordAuthenticationFilter가 AntPathRequestMatcher를 통해 요청 정보가 매칭되는지 확인
+    - 요청 정보가 매칭되지 않았다면 FilterChain의 doFilter를 통해 다음 필터 호출
+2. 요청 정보 매칭 시 Username + Password 구성의 Authentication 객체 생성
+3. AuthenticationManager를 통해 Authentication 객체 인증
+    - AuthenticationManager는 AuthenticationProvider에게 위임하여 (여러 구현체가 있음) 인증
+    - 인증 실패 시 AuthenticationException 발생, UsernamePasswordAuthenticationFilter가 해당 예외를 핸들링 하여 인증 실패 케이스 제어
+4. AuthenticationProvider로 부터 인증에 성공했다면, User + Authorities 구성의 Authentication 객체 생성
+5. Security Context에 저장
+6. SuccessHandler 호출

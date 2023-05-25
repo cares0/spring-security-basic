@@ -11,4 +11,9 @@ class SecurityController {
         return "home"
     }
 
+    @GetMapping("/loginPage")
+    fun loginPage(): String {
+        return "loginPage"
+    }
+
 }
