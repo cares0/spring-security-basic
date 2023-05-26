@@ -1,0 +1,2 @@
+1. AnonymousAuthenticationFilter에서 SecurityContext로 부터 Authentication 객체를 꺼낸다.
+2. Authentication 객체가 null이라면 AnonymousAuthenticationToken을 발행하고 익명 사용자 Authentication 객체를 SecurityContext에 저장한다.
