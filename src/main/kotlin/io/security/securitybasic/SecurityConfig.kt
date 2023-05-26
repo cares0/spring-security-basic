@@ -92,6 +92,23 @@ class SecurityConfig(
 
             // Remember Me를 인증하기 위해 User의 정보를 가져오는 Service
             .userDetailsService(userDetailsService)
+
+        http
+            // 세션 정책 설정
+            .sessionManagement()
+
+            // 세션이 유효하지 않을 때 이동 할 페이지
+            .invalidSessionUrl("/login")
+
+            // 동시 세션 제어 설정
+            // 최대 허용 가능 세션 수 (-1: 무제한 로그인 세션 허용)
+            .maximumSessions(1)
+
+            // 동시 로그인 차단 (기본값: false - 기존 세션 만료 정책 적용)
+            .maxSessionsPreventsLogin(true)
+
+            // 세션이 만료된 경우 이동 할 페이지
+            .expiredUrl("/expired")
     }
 
 

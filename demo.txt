@@ -1,2 +1,12 @@
-1. AnonymousAuthenticationFilter에서 SecurityContext로 부터 Authentication 객체를 꺼낸다.
-2. Authentication 객체가 null이라면 AnonymousAuthenticationToken을 발행하고 익명 사용자 Authentication 객체를 SecurityContext에 저장한다.
+- 이전 사용자 세션 만료
+    1. A 디바이스에서 Kim 유저가 로그인 한다.
+    2. A 디바이스에 발급된 세션키가 저장된다.
+    3. B 디바이스에서 Kim 유저가 로그인 한다.
+    4. 서버는 세션에 해당 유저를 등록하고 세션키를 발급한다. 동시에 이전에 Kim 유저가 세션에 등록되어 있음으로 해당 세션을 만료 설정한다.
+    5. A 디바이스에서 Kim 유저가 서버 리소스에 접근할 때, 해당 세션이 만료되었기에 인증에 실패한다.
+
+- 현재 사용자 인증 실패
+    1. A 디바이스에서 Kim 유저가 로그인 한다.
+    2. A 디바이스에 발급된 세션키가 저장된다.
+    3. B 디바이스에서 Kim 유저가 로그인 한다.
+    4. 이미 Kim 유저는 세션에 등록되어 있기에 인증 예외가 발생한다.
