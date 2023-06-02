@@ -97,6 +97,9 @@ class SecurityConfig(
             // 세션 정책 설정
             .sessionManagement()
 
+            // 세션 고정 보호 정책 지정
+            .sessionFixation().migrateSession()
+
             // 세션이 유효하지 않을 때 이동 할 페이지
             .invalidSessionUrl("/login")
 
