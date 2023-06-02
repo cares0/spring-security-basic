@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 
 @Configuration
@@ -96,6 +97,8 @@ class SecurityConfig(
         http
             // 세션 정책 설정
             .sessionManagement()
+
+            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 
             // 세션 고정 보호 정책 지정
             .sessionFixation().migrateSession()
