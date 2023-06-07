@@ -3,3 +3,6 @@ spring:
     user:
       name: custom
       password: custom
+
+server:
+  port: 12345

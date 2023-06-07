@@ -1,6 +1,7 @@
 package io.security.securitybasic
 
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -13,9 +14,23 @@ class SecurityConfig(
     private val userDetailsService: UserDetailsService
 ) : WebSecurityConfigurerAdapter() {
 
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.inMemoryAuthentication().withUser("user").password("{noop}1111").roles("USER")
+        auth.inMemoryAuthentication().withUser("sys").password("{noop}1111").roles("SYS")
+        auth.inMemoryAuthentication().withUser("admin").password("{noop}1111").roles("ADMIN")
+    }
+
     override fun configure(http: HttpSecurity) {
+/*        http
+            .authorizeRequests()
+            .anyRequest().authenticated()*/
+
+        // 인가 설정
         http
             .authorizeRequests()
+            .antMatchers("/user").hasRole("USER")
+            .antMatchers("/admin/pay").access("hasRole('ADMIN')")
+            .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
             .anyRequest().authenticated()
 
         http
