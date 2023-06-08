@@ -27,14 +27,14 @@ class SecurityConfig(
             .anyRequest().authenticated()*/
 
         // 인가 설정
-        http
-            .authorizeRequests()
-            .antMatchers("/login").permitAll()
-            .antMatchers("/user").hasRole("USER")
-            .antMatchers("/admin/pay").access("hasRole('ADMIN')")
-            .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
-            .anyRequest().authenticated()
-
+//        http
+//            .authorizeRequests()
+//            .antMatchers("/login").permitAll()
+//            .antMatchers("/user").hasRole("USER")
+//            .antMatchers("/admin/pay").access("hasRole('ADMIN')")
+//            .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
+//            .anyRequest().authenticated()
+//
 //        http
 //            // 폼 로그인 사용
 //            .formLogin()
@@ -134,24 +134,28 @@ class SecurityConfig(
 //            .expiredUrl("/expired")
 
         //예외 처리
-        http
-            .exceptionHandling()
-            .authenticationEntryPoint { request, response, authException ->
-                response.sendRedirect("/login")
-            }
-            .accessDeniedHandler { request, response, accessDeniedException ->
-                response.sendRedirect("/denied")
-            }
+//        http
+//            .exceptionHandling()
+//            .authenticationEntryPoint { request, response, authException ->
+//                response.sendRedirect("/login")
+//            }
+//            .accessDeniedHandler { request, response, accessDeniedException ->
+//                response.sendRedirect("/denied")
+//            }
+//
+//        http
+//            .formLogin()
+//            .successHandler { request, response, authentication ->
+//                val requestCache = HttpSessionRequestCache()
+//
+//                val savedRequest = requestCache.getRequest(request, response)
+//
+//                response.sendRedirect(savedRequest.redirectUrl)
+//            }
 
         http
-            .formLogin()
-            .successHandler { request, response, authentication ->
-                val requestCache = HttpSessionRequestCache()
-
-                val savedRequest = requestCache.getRequest(request, response)
-
-                response.sendRedirect(savedRequest.redirectUrl)
-            }
+            .csrf()
+            .disable() // CsrfFilter 비활성화
     }
 
 
