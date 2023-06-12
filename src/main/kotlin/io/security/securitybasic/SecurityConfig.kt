@@ -9,8 +9,8 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 class SecurityConfig(
     private val userDetailsService: UserDetailsService
 ) : WebSecurityConfigurerAdapter() {
